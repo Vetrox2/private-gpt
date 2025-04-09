@@ -47,7 +47,7 @@ ui:
   delete_all_files_button_enabled: true
 
 llm:
-  mode: llamacpp
+  mode: azopenai
   prompt_style: "llama3"
   # Should be matching the selected model
   max_new_tokens: 512
@@ -86,7 +86,7 @@ llamacpp:
 
 embedding:
   # Should be matching the value above in most cases
-  mode: huggingface
+  mode: azopenai
   ingest_mode: simple
   embed_dim: 768 # 768 is for nomic-ai/nomic-embed-text-v1.5
 
@@ -107,6 +107,9 @@ milvus:
   uri: local_data/private_gpt/milvus/milvus_local.db
   collection_name: milvus_db
   overwrite: false
+ 
+chroma: 
+  path: local_data/private_gpt/chroma
 
 qdrant:
   path: local_data/private_gpt/qdrant
@@ -138,13 +141,13 @@ ollama:
   autopull_models: true
 
 azopenai:
-  api_key: ${AZ_OPENAI_API_KEY:}
-  azure_endpoint: ${AZ_OPENAI_ENDPOINT:}
-  embedding_deployment_name: ${AZ_OPENAI_EMBEDDING_DEPLOYMENT_NAME:}
-  llm_deployment_name: ${AZ_OPENAI_LLM_DEPLOYMENT_NAME:}
+  api_key: ${Key}
+  azure_endpoint: https://lh-openai-01.openai.azure.com/
+  embedding_deployment_name: text-embedding-ada-002
+  llm_deployment_name: gpt-4
   api_version: "2023-05-15"
   embedding_model: text-embedding-ada-002
-  llm_model: gpt-35-turbo
+  llm_model: gpt-4
 
 gemini:
   api_key: ${GOOGLE_API_KEY:}
