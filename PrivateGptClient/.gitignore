@@ -1,0 +1,125 @@
+# Visual Studio i Visual Studio Code
+## Ignoruj pliki konfiguracyjne użytkownika
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+## Ignoruj foldery i pliki generowane przez Visual Studio
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+x64/
+x86/
+[Aa]rch/
+[Bb]in/
+[Oo]bj/
+[Tt]est[Rr]esults/
+*.cache
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.pdb
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*.log
+*.tlog
+*.bak
+*.cachefile
+*.ide
+*.ipch
+*.aps
+*.ncb
+*.opensdf
+*.sdf
+*.sqlproj
+*.dbmdl
+*.dbproj
+*.db
+*.mdf
+*.ldf
+*.rdl.data
+*.bim.layout
+*.bim_*.settings
+*.rptproj.bak
+*.csproj.EntityFrameworkCore
+
+## Ignoruj pliki konfiguracyjne specyficzne dla VS
+*.vs/
+.vscode/
+*.code-workspace
+
+## Ignoruj pliki specyficzne dla NuGet
+packages/
+*.nupkg
+*.snupkg
+**/project.lock.json
+**/project.fragment.lock.json
+**/artifacts/
+
+## Ignoruj foldery i pliki specyficzne dla testów
+[Tt]est[Rr]esult*/
+[Cc]overage*/
+*.trx
+*.coverage
+*.coveragexml
+
+## Ignoruj pliki specyficzne dla Azure
+*.azurePipelines/
+*.azure-pipelines.yml
+*.azcli
+
+## Ignoruj pliki tymczasowe i backupowe
+*~
+*.swp
+*.bak
+*.tmp
+*.orig
+*.backup
+
+## Ignoruj foldery specyficzne dla narzędzi zewnętrznych
+node_modules/
+bower_components/
+wwwroot/lib/
+
+## Ignoruj pliki specyficzne dla środowiska lokalnego
+.env
+.env.local
+.env.*.local
+appsettings.json
+appsettings.*.json
+local.settings.json
+
+## Ignoruj pliki specyficzne dla macOS
+.DS_Store
+
+## Ignoruj pliki specyficzne dla Windows
+Thumbs.db
+desktop.ini
+
+## Ignoruj pliki specyficzne dla projektów C#
+*.csproj.user
+*.csproj.*.user
+
+## Ignoruj pliki specyficzne dla ReSharper
+_ReSharper*/
+*.DotSettings.user
+
+## Ignoruj pliki specyficzne dla Rider
+.idea/
+
+## Ignoruj inne pliki generowane
+*.generated.cs
+*.g.cs
+*.g.i.cs
+*.Designer.cs
+*.designer.cs
