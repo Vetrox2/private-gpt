@@ -11,6 +11,30 @@ namespace PrivateGptClient
         private readonly HttpClient _httpClient = new();
         private readonly string _apiUrl = apiUrl;
 
+        public async Task IngestTextAsync(string contentText, string fileName)
+        {
+            try
+            {
+                using var content = new MultipartFormDataContent();
+                using var stringContent = new StringContent(contentText, Encoding.UTF8);
+                content.Add(stringContent, "file", fileName);
+
+                var response = await _httpClient.PostAsync($"{_apiUrl}/ingest", content);
+                response.EnsureSuccessStatusCode();
+                var responseContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Text ingested as file: {fileName}");
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Failed to ingest text {fileName}: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Unexpected error ingesting text {fileName}: {ex.Message}");
+            }
+        }
+
+
         public async Task IngestFilesAsync(string directoryPath)
         {
             if (!Directory.Exists(directoryPath))
