@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Flurl.Http;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,14 +17,25 @@ namespace PrivateGptClient
         {
             try
             {
-                using var content = new MultipartFormDataContent();
-                using var stringContent = new StringContent(contentText, Encoding.UTF8);
-                content.Add(stringContent, "file", fileName);
+                var input = "";
+                foreach (char c in contentText)
+                {
+                    if (IsCharOfInvalidCategory(c))
+                    {
+                        continue;
+                    }
 
-                var response = await _httpClient.PostAsync($"{_apiUrl}/ingest", content);
-                response.EnsureSuccessStatusCode();
-                var responseContent = await response.Content.ReadAsStringAsync();
-                Console.WriteLine($"Text ingested as file: {fileName}");
+                        input += c;
+                }
+
+                var url = $"{_apiUrl}/ingest/text";
+                var response = await url.PostJsonAsync(new
+                {
+                    file_name = fileName,
+                    text = input
+                });
+
+                Console.WriteLine(response.ResponseMessage);
             }
             catch (HttpRequestException ex)
             {
@@ -45,7 +58,6 @@ namespace PrivateGptClient
 
             try
             {
-                // Get all files in the directory and all subdirectories recursively
                 var files = Directory.GetFiles(directoryPath, "*", SearchOption.AllDirectories);
                 foreach (var filePath in files)
                 {
@@ -93,5 +105,23 @@ namespace PrivateGptClient
                 Console.WriteLine($"Unexpected error ingesting file {filePath}: {ex.Message}");
             }
         }
+
+        bool IsCharOfInvalidCategory(char c)
+        {
+            UnicodeCategory cat = Char.GetUnicodeCategory(c);
+
+            bool isPolishLetter =
+                "ąćęłńóśźżĄĆĘŁŃÓŚŹŻ".IndexOf(c) >= 0;
+
+            return cat == UnicodeCategory.Control ||
+                   cat == UnicodeCategory.OtherNotAssigned ||
+                   cat == UnicodeCategory.Surrogate ||
+                   cat == UnicodeCategory.PrivateUse ||
+                   cat == UnicodeCategory.OtherSymbol ||
+                   (!Char.IsLetterOrDigit(c) && !Char.IsPunctuation(c) && !Char.IsWhiteSpace(c)) ||
+                   (Char.IsLetter(c) && !isPolishLetter && c < 128 == false);
+        }
+
+
     }
 }
